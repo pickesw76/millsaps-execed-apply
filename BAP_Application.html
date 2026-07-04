@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BAP Application for Admission | Millsaps Executive Education</title>
+<style>
+  :root {
+    --purple-dark: #21145F;
+    --purple: #5D3CCE;
+    --purple-light: #6D57DB;
+    --rose: #D45D85;
+    --lavender: #F5F3FA;
+    --white: #FFFFFF;
+    --gray-100: #f0f1f3;
+    --gray-200: #e2e4e8;
+    --gray-400: #9a9fad;
+    --gray-600: #5a5f6e;
+    --dark-text: #2D2B3A;
+    --red: #c0392b;
+    --green: #27ae60;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--gray-100);
+    color: var(--dark-text);
+    line-height: 1.6;
+  }
+
+  .form-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .form-header {
+    background: var(--purple-dark);
+    color: var(--white);
+    padding: 40px 40px 30px;
+    border-radius: 12px 12px 0 0;
+    text-align: center;
+    position: relative;
+  }
+
+  .form-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--rose);
+  }
+
+  .form-header h1 {
+    font-size: 28px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .form-header .program-name {
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rose);
+    font-weight: 600;
+  }
+
+  .form-header .school-name {
+    font-size: 13px;
+    opacity: 0.85;
+    margin-bottom: 16px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .form-body {
+    background: var(--white);
+    padding: 0;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  .form-intro {
+    padding: 24px 40px;
+    background: var(--lavender);
+    border-bottom: 1px solid var(--gray-200);
+    font-size: 14px;
+    color: var(--gray-600);
+  }
+
+  .form-intro .required-note {
+    color: var(--red);
+    font-weight: 600;
+  }
+
+  .section {
+    padding: 32px 40px;
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  .section:last-child { border-bottom: none; }
+
+  .section-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--purple-dark);
+    margin-bottom: 4px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--rose);
+    display: inline-block;
+  }
+
+  .section-subtitle {
+    font-size: 13px;
+    color: var(--gray-600);
+    margin-top: 8px;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+
+  .field-group {
+    margin-bottom: 20px;
+  }
+
+  .field-row {
+    display: flex;
+    gap: 16px;
+  }
+
+  .field-row .field-group { flex: 1; }
+
+  label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: 6px;
+  }
+
+  label .required {
+    color: var(--red);
+    margin-left: 2px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 6px;
+    font-size: 15px;
+    font-family: inherit;
+    color: var(--dark-text);
+    background: var(--white);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--purple);
+    box-shadow: 0 0 0 3px rgba(93,60,206,0.15);
+  }
+
+  input.error, select.error, textarea.error {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(192,57,43,0.1);
+  }
+
+  textarea { resize: vertical; min-height: 100px; }
+
+  .radio-group, .checkbox-group {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+  }
+
+  .radio-group label, .checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 400;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  input[type="radio"], input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--purple);
+  }
+
+  .field-hint {
+    font-size: 12px;
+    color: var(--gray-400);
+    margin-top: 4px;
+  }
+
+  .error-message {
+    font-size: 12px;
+    color: var(--red);
+    margin-top: 4px;
+    display: none;
+  }
+
+  .submit-section {
+    padding: 30px 40px;
+    text-align: center;
+    background: var(--lavender);
+    border-radius: 0 0 12px 12px;
+  }
+
+  .submit-btn {
+    background: var(--purple);
+    color: var(--white);
+    border: none;
+    padding: 14px 60px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .submit-btn:hover { background: var(--purple-dark); }
+  .submit-btn:active { transform: scale(0.98); }
+  .submit-btn:disabled {
+    background: var(--gray-400);
+    cursor: not-allowed;
+  }
+
+  .submit-note {
+    font-size: 12px;
+    color: var(--gray-400);
+    margin-top: 12px;
+  }
+
+  /* Success / Error overlay */
+  .overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .overlay.active { display: flex; }
+
+  .overlay-content {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+  }
+
+  .overlay-content .icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+
+  .overlay-content h2 {
+    color: var(--purple-dark);
+    margin-bottom: 8px;
+  }
+
+  .overlay-content p {
+    color: var(--gray-600);
+    font-size: 14px;
+  }
+
+  .spinner {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--white);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 600px) {
+    .form-container { padding: 10px; }
+    .form-header { padding: 24px 20px; }
+    .form-header h1 { font-size: 22px; }
+    .section { padding: 24px 20px; }
+    .field-row { flex-direction: column; gap: 0; }
+    .submit-section { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="form-container">
+  <div class="form-header">
+    <div class="school-name">The Else School of Management &bull; Millsaps College</div>
+    <div class="program-name">Executive Education</div>
+    <h1>Application for Admission</h1>
+    <div class="program-name" style="margin-top:8px;">Business Analytics Program (BAP)</div>
+  </div>
+
+  <div class="form-body">
+    <div class="form-intro">
+      Fields marked with <span class="required-note">*</span> are required. Please complete all sections of this application.
+    </div>
+
+    <form id="bap-form" action="https://formsubmit.co/pickesw@millsaps.edu" method="POST" novalidate>
+      <!-- Formsubmit.co configuration -->
+      <input type="hidden" name="_subject" value="New BAP Application Received">
+      <input type="hidden" name="_cc" value="execed@millsaps.edu">
+      <input type="hidden" name="_autoresponse" value="Thank you for submitting your application to the Advanced Applied Leadership Program (BAP) at the Else School of Management, Millsaps College. We have received your application and it is currently under review. Please email a current copy of your resume to execed@millsaps.edu if you have not already done so. A letter of reference request will be sent to your organizational sponsor. The Admissions Committee will review your application and be in touch regarding next steps.">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="program" value="BAP">
+
+      <!-- SECTION 1: General Information -->
+      <div class="section">
+        <div class="section-title">General Information</div>
+        <div style="margin-top:20px;"></div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label>First Name <span class="required">*</span></label>
+            <input type="text" name="firstName" required>
+            <div class="error-message">First name is required.</div>
+          </div>
+          <div class="field-group">
+            <label>Last Name <span class="required">*</span></label>
+            <input type="text" name="lastName" required>
+            <div class="error-message">Last name is required.</div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label>Prefix, Suffix</label>
+            <input type="text" name="prefixSuffix" placeholder="e.g., Dr., Jr., III">
+          </div>
+          <div class="field-group">
+            <label>Nickname / Preferred Name</label>
+            <input type="text" name="nickname">
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label>Date of Birth <span class="required">*</span></label>
+            <input type="date" name="dateOfBirth" required>
+            <div class="error-message">Date of birth is required.</div>
+          </div>
+          <div class="field-group">
+            <label>Email Address <span class="required">*</span></label>
+            <input type="email" name="email" required>
+            <div class="error-message">A valid email address is required.</div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label>Preferred Phone Number <span class="required">*</span></label>
+            <input type="tel" name="phone" required placeholder="(555) 555-5555">
+            <div class="error-message">Phone number is required.</div>
+          </div>
+          <div class="field-group">
+            <label>Type of Phone Number <span class="required">*</span></label>
+            <div class="radio-group">
+              <label><input type="radio" name="phoneType" value="Mobile" required> Mobile</label>
+              <label><input type="radio" name="phoneType" value="Home"> Home</label>
+              <label><input type="radio" name="phoneType" value="Office"> Office</label>
+            </div>
+            <div class="error-message">Please select a phone type.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 2: Preferred Mailing Address -->
+      <div class="section">
+        <div class="section-title">Preferred Mailing Address</div>
+        <div style="margin-top:20px;"></div>
+
+        <div class="field-group">
+          <label>Street Address <span class="required">*</span></label>
+          <input type="text" name="streetAddress" required>
+          <div class="error-message">Street address is required.</div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label>City, State, and Zip Code <span class="required">*</span></label>
+            <input type="text" name="cityStateZip" required placeholder="City, ST 00000">
+            <div class="error-message">City, state, and zip are required.</div>
+          </div>
+          <div class="field-group">
+            <label>Type of Address <span class="required">*</span></label>
+            <div class="radio-group">
+              <label><input type="radio" name="addressType" value="Home" required> Home</label>
+              <label><input type="radio" name="addressType" value="Office"> Office</label>
+            </div>
+            <div class="error-message">Please select an address type.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 3: Company or Agency Information -->
+      <div class="section">
+        <div class="section-title">Company or Agency Information</div>
+        <div style="margin-top:20px;"></div>
+
+        <div class="field-group">
+          <label>Organization or Agency Name <span class="required">*</span></label>
+          <input type="text" name="orgName" required>
+          <div class="error-message">Organization name is required.</div>
+        </div>
+
+        <div class="field-group">
+          <label>Organizational Address <span class="required">*</span></label>
+          <input type="text" name="orgAddress" required>
+          <div class="error-message">Organization address is required.</div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label>Organizational City, State, and Zip Code <span class="required">*</span></label>
+            <input type="text" name="orgCityStateZip" required>
+            <div class="error-message">Required.</div>
+          </div>
+          <div class="field-group">
+            <label>Division (if applicable)</label>
+            <input type="text" name="division">
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label>Title or Position <span class="required">*</span></label>
+            <input type="text" name="titlePosition" required>
+            <div class="error-message">Title or position is required.</div>
+          </div>
+          <div class="field-group">
+            <label>How Long in Current Role? <span class="required">*</span></label>
+            <input type="text" name="timeInRole" required placeholder="e.g., 3 years">
+            <div class="error-message">Required.</div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label>Telephone <span class="required">*</span></label>
+            <input type="tel" name="orgTelephone" required>
+            <div class="error-message">Telephone is required.</div>
+          </div>
+          <div class="field-group">
+            <label>Fax</label>
+            <input type="tel" name="orgFax">
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 4: Education -->
+      <div class="section">
+        <div class="section-title">Education</div>
+        <div style="margin-top:20px;"></div>
+
+        <div class="field-group">
+          <label>High School and Year of Graduation</label>
+          <input type="text" name="highSchool" placeholder="School name, Year">
+        </div>
+
+        <div class="field-group">
+          <label>College / University and Year of Graduation</label>
+          <input type="text" name="college" placeholder="School name, Year">
+        </div>
+
+        <div class="field-group">
+          <label>Postbaccalaureate and Year of Graduation</label>
+          <input type="text" name="postBacc" placeholder="School name, Year">
+        </div>
+
+        <div class="field-group">
+          <label>Degree(s) Earned <span class="required">*</span></label>
+          <div class="field-hint">Choose all that apply</div>
+          <div class="checkbox-group" style="margin-top:8px;">
+            <label><input type="checkbox" name="degree" value="High School Diploma"> High School Diploma</label>
+            <label><input type="checkbox" name="degree" value="Associate's"> Associate's</label>
+            <label><input type="checkbox" name="degree" value="Bachelor's"> Bachelor's</label>
+            <label><input type="checkbox" name="degree" value="Master's"> Master's</label>
+            <label><input type="checkbox" name="degree" value="Doctorate"> Doctorate</label>
+            <label><input type="checkbox" name="degree" value="Other"> Other</label>
+          </div>
+          <div class="error-message">Please select at least one degree.</div>
+        </div>
+      </div>
+
+      <!-- SECTION 5: Work Experience -->
+      <div class="section">
+        <div class="section-title">Work Experience</div>
+        <div class="section-subtitle">Please email a current copy of your resume to execed@millsaps.edu. If all positions listed are in the same company, please give the major promotional sequence.</div>
+
+        <div class="field-group">
+          <label>Please describe your current responsibilities, beyond what is described on your resume, including your level in the organization <span class="required">*</span></label>
+          <textarea name="currentResponsibilities" required rows="5"></textarea>
+          <div class="error-message">This field is required.</div>
+        </div>
+
+        <div class="field-group">
+          <label>Please provide a brief description of your organizational and/or business unit <span class="required">*</span></label>
+          <textarea name="orgDescription" required rows="4"></textarea>
+          <div class="error-message">This field is required.</div>
+        </div>
+      </div>
+
+      <!-- SECTION 6: Goals and Motivation -->
+      <div class="section">
+        <div class="section-title">Goals and Motivation</div>
+        <div class="section-subtitle">Please respond to the following prompts to help us better understand how this program will aid in your professional development.</div>
+
+        <div class="field-group">
+          <label>What are the primary reasons for your applying to this program? <span class="required">*</span></label>
+          <textarea name="reasonsForApplying" required rows="4"></textarea>
+          <div class="error-message">This field is required.</div>
+        </div>
+
+        <div class="field-group">
+          <label>What do you hope to gain or achieve (goals and objectives) by completing this program? Please be specific. <span class="required">*</span></label>
+          <textarea name="goalsObjectives" required rows="4"></textarea>
+          <div class="error-message">This field is required.</div>
+        </div>
+
+        <div class="field-group">
+          <label>How will you gauge your progress in meeting the above goals? <span class="required">*</span></label>
+          <textarea name="gaugeProgress" required rows="4"></textarea>
+          <div class="error-message">This field is required.</div>
+        </div>
+
+        <div class="field-group">
+          <label>What are the most formidable challenges facing your organization and/or business unit? <span class="required">*</span></label>
+          <textarea name="challenges" required rows="4"></textarea>
+          <div class="error-message">This field is required.</div>
+        </div>
+
+        <div class="field-group">
+          <label>What concerns, if any, do you have about the program? <span class="required">*</span></label>
+          <textarea name="concerns" required rows="3"></textarea>
+          <div class="error-message">This field is required.</div>
+        </div>
+      </div>
+
+      <!-- SECTION 7: Billing Information -->
+      <div class="section">
+        <div class="section-title">Billing Information</div>
+        <div class="section-subtitle">An invoice will be emailed to the individual indicated below.</div>
+
+        <div class="field-group">
+          <label>Name of Company, Agency, or Organization <span class="required">*</span></label>
+          <input type="text" name="billingCompany" required>
+          <div class="error-message">Required.</div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label>Billing Contact: First and Last Name <span class="required">*</span></label>
+            <input type="text" name="billingContactName" required>
+            <div class="error-message">Required.</div>
+          </div>
+          <div class="field-group">
+            <label>Title or Position <span class="required">*</span></label>
+            <input type="text" name="billingTitle" required>
+            <div class="error-message">Required.</div>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Organization Mailing Address <span class="required">*</span></label>
+          <input type="text" name="billingAddress" required>
+          <div class="error-message">Required.</div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label>City, State, and Zip Code <span class="required">*</span></label>
+            <input type="text" name="billingCityStateZip" required>
+            <div class="error-message">Required.</div>
+          </div>
+          <div class="field-group">
+            <label>Billing Email <span class="required">*</span></label>
+            <input type="email" name="billingEmail" required>
+            <div class="error-message">A valid email is required.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 8: Sponsor Information -->
+      <div class="section">
+        <div class="section-title">Sponsor Information</div>
+        <div class="section-subtitle">The program requires that a letter of reference be completed by your organizational sponsor to provide a detailed appraisal of the applicant's past performance and potential for future success. The information provided is only for use by the Admissions Committee.</div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label>Name of Sponsor <span class="required">*</span></label>
+            <input type="text" name="sponsorName" required>
+            <div class="error-message">Required.</div>
+          </div>
+          <div class="field-group">
+            <label>Sponsor Title or Position <span class="required">*</span></label>
+            <input type="text" name="sponsorTitle" required>
+            <div class="error-message">Required.</div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label>Sponsor Phone Number <span class="required">*</span></label>
+            <input type="tel" name="sponsorPhone" required>
+            <div class="error-message">Required.</div>
+          </div>
+          <div class="field-group">
+            <label>Sponsor Email Address <span class="required">*</span></label>
+            <input type="email" name="sponsorEmail" required>
+            <div class="error-message">A valid email is required.</div>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Sponsor Email for Letter of Reference <span class="required">*</span></label>
+          <input type="email" name="sponsorRefEmail" required>
+          <div class="field-hint">A letter of reference request will be sent to this email address.</div>
+          <div class="error-message">A valid email is required.</div>
+        </div>
+      </div>
+
+      <!-- SUBMIT -->
+      <div class="submit-section">
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <span id="btnText">Submit Application</span>
+          <div class="spinner" id="spinner"></div>
+        </button>
+        <div class="submit-note">
+          By submitting this application, you confirm that the information provided is accurate and complete.
+          <br>Please also email a copy of your resume to <strong>execed@millsaps.edu</strong>.
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Success Overlay -->
+<div class="overlay" id="successOverlay">
+  <div class="overlay-content">
+    <div class="icon" style="color:var(--green);">&#10003;</div>
+    <h2>Application Submitted!</h2>
+    <p>Thank you for applying to the BAP program. We have received your application and will be in touch soon. Please remember to email your resume to <strong>execed@millsaps.edu</strong>.</p>
+  </div>
+</div>
+
+<!-- Error Overlay -->
+<div class="overlay" id="errorOverlay">
+  <div class="overlay-content">
+    <div class="icon" style="color:var(--red);">&#10007;</div>
+    <h2>Submission Error</h2>
+    <p id="errorText">There was a problem submitting your application. Please try again or contact execed@millsaps.edu for assistance.</p>
+    <br>
+    <button onclick="document.getElementById('errorOverlay').classList.remove('active')" style="padding:10px 30px;border:1px solid var(--gray-200);border-radius:6px;background:var(--white);cursor:pointer;font-size:14px;">Close</button>
+  </div>
+</div>
+
+<script>
+const form = document.getElementById('bap-form');
+const submitBtn = document.getElementById('submitBtn');
+const btnText = document.getElementById('btnText');
+const spinner = document.getElementById('spinner');
+
+form.addEventListener('submit', function(e) {
+  // Clear previous errors
+  document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+  document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+
+  // Validate
+  let isValid = true;
+  const requiredFields = form.querySelectorAll('[required]');
+  requiredFields.forEach(field => {
+    if (field.type === 'radio') {
+      const radioGroup = form.querySelectorAll(`[name="${field.name}"]`);
+      const checked = Array.from(radioGroup).some(r => r.checked);
+      if (!checked) {
+        const container = radioGroup[0].closest('.field-group');
+        if (container) container.querySelector('.error-message').style.display = 'block';
+        isValid = false;
+      }
+    } else if (!field.value.trim()) {
+      field.classList.add('error');
+      const errMsg = field.closest('.field-group')?.querySelector('.error-message');
+      if (errMsg) errMsg.style.display = 'block';
+      isValid = false;
+    } else if (field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) {
+      field.classList.add('error');
+      const errMsg = field.closest('.field-group')?.querySelector('.error-message');
+      if (errMsg) errMsg.style.display = 'block';
+      isValid = false;
+    }
+  });
+
+  // Check degree checkboxes
+  const degreeChecked = form.querySelectorAll('[name="degree"]:checked');
+  if (degreeChecked.length === 0) {
+    const degreeErr = form.querySelector('[name="degree"]').closest('.field-group')?.querySelector('.error-message');
+    if (degreeErr) degreeErr.style.display = 'block';
+    isValid = false;
+  }
+
+  if (!isValid) {
+    e.preventDefault();
+    const firstError = form.querySelector('.error, .error-message[style*="block"]');
+    if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  // If valid, show spinner and let the form submit naturally to Formsubmit.co
+  submitBtn.disabled = true;
+  btnText.style.display = 'none';
+  spinner.style.display = 'block';
+});
+
+// Real-time validation clearing
+form.addEventListener('input', function(e) {
+  if (e.target.classList.contains('error')) {
+    e.target.classList.remove('error');
+    const errMsg = e.target.closest('.field-group')?.querySelector('.error-message');
+    if (errMsg) errMsg.style.display = 'none';
+  }
+});
+</script>
+
+</body>
+</html>

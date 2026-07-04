@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apply | Millsaps Executive Education</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #F5F3FA;
+    color: #2D2B3A;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+  .container {
+    max-width: 700px;
+    width: 100%;
+    text-align: center;
+  }
+  .header {
+    margin-bottom: 48px;
+  }
+  .header .school {
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #6D57DB;
+    margin-bottom: 8px;
+  }
+  .header h1 {
+    font-size: 36px;
+    font-weight: 300;
+    color: #21145F;
+    margin-bottom: 4px;
+  }
+  .header .accent-line {
+    width: 60px;
+    height: 3px;
+    background: #D45D85;
+    margin: 16px auto 0;
+    border-radius: 2px;
+  }
+  .cards {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .card {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 40px 32px;
+    flex: 1;
+    min-width: 280px;
+    max-width: 340px;
+    box-shadow: 0 4px 20px rgba(33, 20, 95, 0.08);
+    text-decoration: none;
+    color: #2D2B3A;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: #D45D85;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(33, 20, 95, 0.15);
+  }
+  .card .program-label {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #D45D85;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .card h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #21145F;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .card p {
+    font-size: 14px;
+    color: #5a5f6e;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .card .apply-btn {
+    display: inline-block;
+    background: #5D3CCE;
+    color: #FFFFFF;
+    padding: 12px 36px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .card:hover .apply-btn {
+    background: #21145F;
+  }
+  .footer {
+    margin-top: 48px;
+    font-size: 13px;
+    color: #9a9fad;
+  }
+  .footer a {
+    color: #5D3CCE;
+    text-decoration: none;
+  }
+  @media (max-width: 600px) {
+    .header h1 { font-size: 28px; }
+    .cards { flex-direction: column; align-items: center; }
+    .card { max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div class="school">The Else School of Management &bull; Millsaps College</div>
+    <h1>Executive Education</h1>
+    <div class="accent-line"></div>
+  </div>
+
+  <div class="cards">
+    <a href="AALP_Application.html" class="card">
+      <div class="program-label">AALP</div>
+      <h2>Advanced Applied Leadership Program</h2>
+      <p>Transform high performers into confident, adaptive leaders through an immersive executive development experience.</p>
+      <span class="apply-btn">Apply Now</span>
+    </a>
+
+    <a href="BAP_Application.html" class="card">
+      <div class="program-label">BAP</div>
+      <h2>Business Advantage Program</h2>
+      <p>Build core business knowledge across your organization with practical, results-driven professional development.</p>
+      <span class="apply-btn">Apply Now</span>
+    </a>
+  </div>
+
+  <div class="footer">
+    Questions? Contact <a href="mailto:execed@millsaps.edu">execed@millsaps.edu</a>
+  </div>
+</div>
+
+</body>
+</html>
